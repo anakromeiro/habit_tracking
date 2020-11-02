@@ -1,0 +1,162 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Habit Tracker App
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: /api
+
+# Paths supported by the server application
+paths:
+  /habits:
+    get:
+      operationId: habits.read #defines the Python import path/function that will respond to an HTTP GET
+      tags:
+        - Habits
+      summary: Read the list of habits
+      description: Read the list of habits
+      responses:
+        200:
+          description: Successful read habits list operation
+          schema:
+            type: array
+            items:
+              properties:
+                id: 
+                  type: string
+                  description: Id of the habit
+                name:
+                  type: string
+                period:
+                  type: string
+                goal:
+                  type: integer
+                created_date:
+                  type: string
+                  #format: date-time
+    post:
+      operationId: habits.create #defines the Python import path/function that will respond to an HTTP GET
+      tags:
+        - Habits
+      summary: Create a new habit and add it to habits list
+      description: Create a new habit and add it to habits list
+      parameters:
+        - name: habit
+          in: body
+          description: Habit to create
+          required: True
+          schema:
+            type: object
+            properties:
+                name: 
+                    type: string
+                    description: Name of the habit
+                period:
+                    type: string
+                    description: Period the user would like to register the habit (daily, weekly or monthly)
+                goal:
+                    type: integer
+                    description: How many times per period the user would like to register it
+      responses:
+        201:
+          description: Successful created habit
+          schema:
+            type: array
+            items:
+              properties:
+                id: 
+                  type: string
+                  description: Id of the habit
+                name:
+                  type: string
+                period:
+                  type: string
+                goal:
+                  type: integer
+                created_date:
+                  type: string
+  
+  /habits/{id}:
+    get:
+      operationId: habits.read_one
+      tags:
+        - Habits
+      summary: Read one habit from the habits list
+      description: Read one habit from the habits list
+      parameters:
+        - name: id
+          in: path
+          description: ID of the habit to get from the list
+          type: string
+          required: True
+      responses:
+        200:
+          description: Successfully read habit from habits list operation
+          schema:
+            type: object
+            properties:
+              id: 
+               type: string
+               description: Id of the habit
+              name:
+                type: string
+              period:
+                type: string
+              goal:
+                type: integer
+              created_date:
+                type: string
+
+    put:
+      operationId: habits.update #defines the Python import path/function that will respond to an HTTP GET
+      tags:
+        - Habits
+      summary: Update a habit in the habits list
+      description: Update a habit in the habits list
+      parameters:
+        - name: id
+          in: path
+          description: Name of the habit to update
+          type: string
+          required: True
+        - name: habit
+          in: body                    
+          schema:
+            type: object
+            properties:
+                id: 
+                   type: string
+                   description: Id of the habit
+                name: 
+                    type: string
+                    description: Name of the habit
+                period:
+                    type: string
+                    description: Period the user would like to register the habit (daily, weekly or monthly)
+                goal:
+                    type: integer
+                    description: How many times per period the user would like to register it
+                created_date:
+                    type: string
+      responses:
+        200:
+          description: "Successfully updated habit in habits list operation"
+          
+    delete:
+      operationId: habits.delete
+      tags:
+        - Habits
+      summary: Delete a habit
+      description: Delete a habit
+      parameters:
+        - name: id
+          in: path
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully deleted a habit
