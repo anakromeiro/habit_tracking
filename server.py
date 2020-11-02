@@ -16,8 +16,7 @@ def home():
     This function just responds to the browser ULR localhost:5000/
 
     :return: the rendered template 'home.html'
-    """    
-    
+    """      
     # having an index.html file in the templates directory causes problems once you import the Connexion module in your program, this is the reason the file is called home.html
     return render_template('home.html')
 
